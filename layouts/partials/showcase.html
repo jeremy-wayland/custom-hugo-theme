@@ -23,7 +23,7 @@
           <div class="mb-4"> <!-- Added class mb-4 to create margin below the paragraph -->
             {{ $img := resources.Get .Site.Data.homepage.showcase.image.x }}
             {{ $img2x := resources.Get .Site.Data.homepage.showcase.image._2x }}
-            {{ $desiredWidth := 430 }} <!-- Desired width in pixels -->
+            {{ $desiredWidth := 480 }} <!-- Desired width in pixels -->
             {{ $desiredHeight := div (mul $img.Height $desiredWidth) $img.Width }}
             <!-- Calculate height based on aspect ratio -->
             {{ $resizedImage := $img.Resize (printf "%dx%d" $desiredWidth $desiredHeight) }}
