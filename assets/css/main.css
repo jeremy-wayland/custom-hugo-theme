@@ -80,6 +80,11 @@ sup {
     /* Adjust the left margin as needed */
 }
 
+.social-icon {
+    font-size: 50px;
+    /* Adjust the size as needed */
+}
+
 /*@font-face {
     font-family: Inter;
     font-display: swap;

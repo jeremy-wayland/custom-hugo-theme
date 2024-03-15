@@ -6,17 +6,15 @@
         <div class="about__profile-picture mb-4">
           {{ $img := resources.Get .Site.Data.homepage.about.image.x }}
           {{ $img2x := resources.Get .Site.Data.homepage.about.image._2x }}
-          {{ $imgWebp := $img.Resize "1200x" }}
-          {{ $img2xWebp := $img2x.Resize "2400x" }}
+          {{ $desiredWidth := 300 }} <!-- Desired width in pixels -->
+          {{ $desiredHeight := div (mul $img.Height $desiredWidth) $img.Width }}
+          <!-- Calculate height based on aspect ratio -->
+          {{ $resizedImage := $img.Resize (printf "%dx%d" $desiredWidth $desiredHeight) }}
           <picture>
-            <source srcset="{{ $imgWebp.RelPermalink }} 1x, {{ $img2xWebp.RelPermalink }} 2x" type="image/webp" />
-            <source srcset="{{ $img.RelPermalink }} 1x, {{ $img2x.RelPermalink }} 2x" type="image/webp">
-            <img width="5000" height="auto" class="lozad img-responsive image-left-overflow"
-              src="data:image/gif;base64,R0lGODlhBwACAIAAAP///wAAACH5BAEAAAEALAAAAAAHAAIAAAIDjI9YADs="
-              srcset="{{ $imgWebp.RelPermalink }} 1x, {{ $img2xWebp.RelPermalink }} 2x"
-              data-src="{{ $imgWebp.RelPermalink }}"
-              data-srcset="{{ $imgWebp.RelPermalink }} 1x, {{ $img2xWebp.RelPermalink }} 2x"
-              alt="Profile Picture of Adrián Moreno (@zetxek), working side by side with a colleague: sitting on a desk, while looking at a screen" />
+            <source srcset="{{ $resizedImage.RelPermalink }}" type="image/webp">
+            <img width="{{ $desiredWidth }}" height="{{ $desiredHeight }}"
+              class="lozad img-responsive image-left-overflow" src="{{ $resizedImage.RelPermalink }}"
+              alt="Profile Picture of Adrián Moreno (@zetxek), working side by side with a colleague: sitting on a desk, while looking at a screen">
           </picture>
         </div>
       </div>
