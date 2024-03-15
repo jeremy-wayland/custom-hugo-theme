@@ -26,7 +26,7 @@
 
                     <div class="project__info">
                         <h4>{{ .name }}</h4>
-                        <span>{{ .position }}</span>
+                        <span>{{ .position | safeHTML }}</span>
                         <p>{{ .content }}</p>
                         <div class="project__buttons">
                             <a href="{{ .github }}" class="btn btn-primary btn-social" target="_blank">
