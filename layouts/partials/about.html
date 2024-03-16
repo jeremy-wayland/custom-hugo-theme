@@ -3,10 +3,10 @@
   <div class="container rad-fade-down">
     <div class="row d-flex flex-column-reverse flex-md-row">
       <div class="col-12 col-md-6 d-flex justify-content-center align-items-center"> <!-- Modified -->
-        <div class="about__profile-picture mb-4">
+        <div class="about__profile-picture mb-4 d-flex justify-content-center"> <!-- Modified -->
           {{ $img := resources.Get .Site.Data.homepage.about.image.x }}
           {{ $img2x := resources.Get .Site.Data.homepage.about.image._2x }}
-          {{ $desiredWidth := 300 }} <!-- Desired width in pixels -->
+          {{ $desiredWidth := 400 }} <!-- Desired width in pixels -->
           {{ $desiredHeight := div (mul $img.Height $desiredWidth) $img.Width }}
           <!-- Calculate height based on aspect ratio -->
           {{ $resizedImage := $img.Resize (printf "%dx%d" $desiredWidth $desiredHeight) }}

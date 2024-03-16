@@ -8,7 +8,7 @@
                 <div class="project">
                     {{ $img := resources.Get .image.x }}
                     {{ $img2x := resources.Get .image._2x }}
-                    {{ $height := 200 }} <!-- Desired height parameter -->
+                    {{ $height := 180 }} <!-- Desired height parameter -->
                     {{ $imgWebp := $img.Resize (printf "x%d" $height) }}
                     {{ $img2xWebp := $img2x.Resize (printf "x%d" (mul $height 2)) }}
 
