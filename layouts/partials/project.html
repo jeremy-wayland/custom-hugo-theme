@@ -1,65 +1,61 @@
 {{ if .Site.Data.homepage.testimonial.enable }}
 <section
   id="projects"
-  class="section rad-animation-group section--border-bottom"
+  class="section rad-animation-group section--border-bottom publications-section"
 >
   <div class="container">
     <h2 class="rad-fade-down">{{ .Site.Data.homepage.testimonial.title }}</h2>
-    <div class="row row--padded mb-0 rad-fade-down">
-      {{ range .Site.Data.homepage.testimonial.items }}
-      <div class="col-12 mb-5">
-        <div class="project">
-          {{ $img := resources.Get .image.x }} {{ $img2x := resources.Get
-          .image._2x }} {{ if and $img $img2x }} {{ $height := 180 }}
-          <!-- Desired height parameter -->
-          {{ $imgWebp := $img.Resize (printf "x%d" $height) }} {{ $img2xWebp :=
-          $img2x.Resize (printf "x%d" (mul $height 2)) }}
-
+    <div class="publications-grid rad-fade-down">
+      {{ range $index, $item := .Site.Data.homepage.testimonial.items }}
+      {{ $isFeatured := or .featured (eq $index 0) }}
+      <article class="publication-card {{ if $isFeatured }}publication-card--featured{{ end }}">
+        {{ $img := resources.Get .image.x }}
+        {{ $img2x := resources.Get .image._2x }}
+        {{ if and $img $img2x }}
+        <div class="publication-card__image">
+          {{ if eq (path.Ext .image.x) ".svg" }}
+          <img
+            class="publication-card__svg"
+            src="{{ $img.RelPermalink }}"
+            alt="{{ .name }}"
+          />
+          {{ else }}
+          {{ $height := cond $isFeatured 240 180 }}
+          {{ $imgWebp := $img.Resize (printf "x%d" $height) }}
           <picture>
-            <source
-              srcset="{{ $imgWebp.RelPermalink }} 1x, {{ $img2xWebp.RelPermalink }} 2x"
-              type="image/webp"
-            />
-            <source
-              srcset="{{ $img.RelPermalink }} 1x, {{ $img2x.RelPermalink }} 2x"
-              type="image/webp"
-            />
+            <source srcset="{{ $imgWebp.RelPermalink }}" type="image/webp" />
             <img
-              width="{{ div (mul $height $img.Width) $img.Height }}"
-              height="{{ $height }}"
-              class="lozad img-responsive"
+              class="lozad"
               src="data:image/gif;base64,R0lGODlhBwACAIAAAP///wAAACH5BAEAAAEALAAAAAAHAAIAAAIDjI9YADs="
-              srcset="{{ $img.RelPermalink }} 1x, {{ $img2x.RelPermalink }} 2x"
-              data-src="{{ $img.RelPermalink }}"
-              data-srcset="{{ $img.RelPermalink }} 1x, {{ $img2x.RelPermalink }} 2x"
+              data-src="{{ $imgWebp.RelPermalink }}"
               alt="{{ .name }}"
             />
           </picture>
           {{ end }}
-
-          <div class="project__info">
-            <h4>{{ .name }}</h4>
-            <span>{{ .position | safeHTML }}</span>
-            <p>{{ .content }}</p>
-            <div class="project__buttons">
-              <a
-                href="{{ .github }}"
-                class="btn btn-primary btn-social"
-                target="_blank"
-              >
-                <i class="icon-github-line"></i> Code
-              </a>
-              <a
-                href="{{ .google_scholar }}"
-                class="btn btn-primary btn-social"
-                target="_blank"
-              >
-                <i class="icon-profile-fill"></i> Paper
-              </a>
-            </div>
+        </div>
+        {{ end }}
+        <div class="publication-card__content">
+          {{ if .badge }}
+          {{ $badgeClass := replace (lower .badge) " " "-" }}
+          <span class="publication-badge publication-badge--{{ $badgeClass }}">{{ .badge }}</span>
+          {{ end }}
+          <h3 class="publication-card__title">{{ .name }}</h3>
+          <span class="publication-card__venue">{{ .position | safeHTML }}</span>
+          <p class="publication-card__abstract">{{ .content }}</p>
+          <div class="publication-card__actions">
+            {{ if .github }}
+            <a href="{{ .github }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+              <i class="icon-github-line"></i> Code
+            </a>
+            {{ end }}
+            {{ if .google_scholar }}
+            <a href="{{ .google_scholar }}" class="btn btn-outline-secondary btn-sm" target="_blank" rel="noopener">
+              <i class="icon-profile-fill"></i> Paper
+            </a>
+            {{ end }}
           </div>
         </div>
-      </div>
+      </article>
       {{ end }}
     </div>
   </div>

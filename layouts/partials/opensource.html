@@ -1,0 +1,33 @@
+{{ if .Site.Data.homepage.opensource.enable }}
+<section
+  id="opensource"
+  class="section rad-animation-group section--border-bottom open-source-section"
+>
+  <div class="container">
+    <h2 class="rad-fade-down">{{ .Site.Data.homepage.opensource.title }}</h2>
+    <div class="open-source-grid rad-fade-down">
+      {{ range .Site.Data.homepage.opensource.items }}
+      <article class="open-source-card">
+        <div class="open-source-card__content">
+          {{ if .badge }}
+          <span class="open-source-badge">{{ .badge }}</span>
+          {{ end }}
+          <h3 class="open-source-card__title">{{ .name }}</h3>
+          <p class="open-source-card__description">{{ .content }}</p>
+          <div class="open-source-card__actions">
+            <a href="{{ .github }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+              <i class="icon-github-line"></i> Repository
+            </a>
+            {{ if .docs }}
+            <a href="{{ .docs }}" class="btn btn-outline-secondary btn-sm" target="_blank" rel="noopener">
+              <i class="icon-profile-fill"></i> Docs
+            </a>
+            {{ end }}
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
